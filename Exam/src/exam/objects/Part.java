@@ -4,8 +4,9 @@
 
 /**
  *
- * @author Place Your Name Here
+ * @author Jacob Starr
  */
+package exam.objects;
 public abstract class Part {
     private int id;
     private String name;
