@@ -6,12 +6,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.util.Objects;
+
+//JDK USED: https://bell-sw.com/pages/downloads/#/java-11-lts
+
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("main.fxml"));
-        primaryStage.setTitle("Hello World");
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("main.fxml")));
+        primaryStage.setTitle("C482 Exam - Jacob Starr");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
