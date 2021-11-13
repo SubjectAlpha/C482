@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Text?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="516.0" prefWidth="813.0" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:controller="exam.controllers.Controller" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="516.0" prefWidth="813.0" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Pane layoutX="14.0" layoutY="21.0" prefHeight="482.0" prefWidth="787.0" style="-fx-border-style: solid; -fx-border-radius: 5px;">
          <children>
@@ -51,7 +51,7 @@
                </columns>
             </TableView>
             <Button id="saveButton" layoutX="636.0" layoutY="443.0" mnemonicParsing="false" text="Save" />
-            <Button id="cancelButton" layoutX="698.0" layoutY="443.0" mnemonicParsing="false" text="Cancel" />
+            <Button onAction="#cancelClick" id="cancelButton" layoutX="698.0" layoutY="443.0" mnemonicParsing="false" text="Cancel" />
             <Button id="removePart" layoutX="605.0" layoutY="405.0" mnemonicParsing="false" text="Remove Associated Part" />
          </children>
       </Pane>

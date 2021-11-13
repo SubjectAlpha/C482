@@ -1,6 +1,9 @@
 package exam.objects;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
+import java.util.ArrayList;
 
 /**
  *
@@ -22,6 +25,8 @@ public class Product {
         this.stock = stock;
         this.max = max;
         this.min = min;
+
+        associatedParts = FXCollections.observableList(new ArrayList<Part>());
     }
 
     /**

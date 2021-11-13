@@ -42,7 +42,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="434.0" prefWidth="1082.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11" fx:controller="exam.Controller">
+<VBox prefHeight="434.0" prefWidth="1082.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11" fx:controller="exam.controllers.MainController">
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="413.0" prefWidth="1052.0" VBox.vgrow="ALWAYS">
       <children>
@@ -51,7 +51,7 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-            <Button fx:id="exitButton" onAction="#handleExit" layoutX="932.0" layoutY="389.0" mnemonicParsing="false" text="Exit" />
+            <Button onAction="#handleExit" layoutX="932.0" layoutY="389.0" mnemonicParsing="false" text="Exit" />
             <Pane layoutX="29.0" layoutY="69.0" prefHeight="283.0" prefWidth="482.0" style="-fx-border-style: solid; -fx-border-radius: 10;">
                <children>
                   <Text layoutX="34.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Parts">
@@ -59,18 +59,18 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Text>
-                  <TableView layoutX="23.0" layoutY="50.0" prefHeight="200.0" prefWidth="437.0">
+                  <TableView fx:id="partTable" layoutX="23.0" layoutY="50.0" prefHeight="200.0" prefWidth="437.0">
                     <columns>
-                      <TableColumn prefWidth="75.0" text="Part ID" />
-                      <TableColumn prefWidth="75.0" text="Part Name" />
-                        <TableColumn prefWidth="109.0" text="Inventory Level" />
-                        <TableColumn prefWidth="177.0" text="Price/ Cost per Unit" />
+                      <TableColumn fx:id="PartId" prefWidth="75.0" text="Part ID" />
+                      <TableColumn fx:id="PartName" prefWidth="75.0" text="Part Name" />
+                        <TableColumn fx:id="PartAmount" prefWidth="109.0" text="Inventory Level" />
+                        <TableColumn fx:id="PartCost" prefWidth="177.0" text="Price/ Cost per Unit" />
                     </columns>
                   </TableView>
                   <TextField layoutX="311.0" layoutY="14.0" promptText="Search by Part ID or Name" />
-                  <Button fx:id="addPartButton" onAction="#openAddPart" layoutX="304.0" layoutY="250.0" mnemonicParsing="false" text="Add" />
-                  <Button layoutX="348.0" layoutY="250.0" mnemonicParsing="false" text="Modify" />
-                  <Button layoutX="408.0" layoutY="250.0" mnemonicParsing="false" text="Delete" />
+                  <Button onAction="#openAddPart" layoutX="304.0" layoutY="250.0" mnemonicParsing="false" text="Add" />
+                  <Button onAction="#openModifyPart" layoutX="348.0" layoutY="250.0" mnemonicParsing="false" text="Modify" />
+                  <Button onAction="#deletePart" layoutX="408.0" layoutY="250.0" mnemonicParsing="false" text="Delete" />
                </children>
             </Pane>
             <Pane layoutX="541.0" layoutY="69.0" prefHeight="283.0" prefWidth="482.0" style="-fx-border-style: solid; -fx-border-radius: 10;">
@@ -80,18 +80,18 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Text>
-                  <TableView layoutX="23.0" layoutY="50.0" prefHeight="200.0" prefWidth="437.0">
+                  <TableView fx:id="productTable" layoutX="23.0" layoutY="50.0" prefHeight="200.0" prefWidth="437.0">
                      <columns>
-                        <TableColumn prefWidth="75.0" text="Product ID" />
-                        <TableColumn prefWidth="103.0" text="Product Name" />
-                        <TableColumn prefWidth="106.0" text="Inventory Level" />
-                        <TableColumn prefWidth="152.0" text="Price/ Cost per Unit" />
+                        <TableColumn fx:id="ProductId" prefWidth="75.0" text="Product ID" />
+                        <TableColumn fx:id="ProductName" prefWidth="103.0" text="Product Name" />
+                        <TableColumn fx:id="ProductAmount" prefWidth="106.0" text="Inventory Level" />
+                        <TableColumn fx:id="ProductCost" prefWidth="152.0" text="Price/ Cost per Unit" />
                      </columns>
                   </TableView>
                   <TextField layoutX="311.0" layoutY="14.0" promptText="Search by Product ID or ..." />
-                  <Button layoutX="300.0" layoutY="251.0" mnemonicParsing="false" text="Add" />
-                  <Button layoutX="344.0" layoutY="251.0" mnemonicParsing="false" text="Modify" />
-                  <Button layoutX="404.0" layoutY="251.0" mnemonicParsing="false" text="Delete" />
+                  <Button onAction="#openAddProduct" layoutX="300.0" layoutY="251.0" mnemonicParsing="false" text="Add" />
+                  <Button onAction="#openModifyProduct" layoutX="344.0" layoutY="251.0" mnemonicParsing="false" text="Modify" />
+                  <Button onAction="#deleteProduct" layoutX="404.0" layoutY="251.0" mnemonicParsing="false" text="Delete" />
                </children>
             </Pane>
       </children>

@@ -1,7 +1,10 @@
 package exam.objects;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableListBase;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 /**
@@ -12,11 +15,18 @@ public class Inventory {
     private ObservableList<Part> allParts;
     private ObservableList<Product> allProducts;
 
+    public Inventory(){
+        allParts = FXCollections.observableList(new ArrayList<>());
+        allProducts = FXCollections.observableList(new ArrayList<>());
+    }
+
     /**
      *
      * @param newPart the newPart to set
      */
     public void addPart(Part newPart){
+        int lastId = allParts.size() > 0 ? allParts.get(allParts.size() - 1).getId() : 0;
+        newPart.setId(lastId + 1);
         allParts.add(newPart);
     }
 
@@ -26,7 +36,13 @@ public class Inventory {
      * @return the Part with matching Id
      */
     public Part lookupPart(int partId){
-        return allParts.get(partId);
+
+        try{
+            return allParts.get(partId - 1);
+        } catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**
@@ -44,14 +60,6 @@ public class Inventory {
      */
     public ObservableList<Part> getAllParts(){
         return allParts;
-    }
-
-    /**
-     *
-     * @param newProduct the product to add to the list
-     */
-    public void addProduct(Product newProduct){
-        allProducts.add(newProduct);
     }
 
     /**
@@ -76,6 +84,16 @@ public class Inventory {
      */
     public boolean deletePart(Part selectedPart){
         return allParts.remove(selectedPart);
+    }
+
+    /**
+     *
+     * @param newProduct the product to add to the list
+     */
+    public void addProduct(Product newProduct){
+        int lastId = allProducts.size() > 0 ? allProducts.get(allProducts.size() - 1).getId() : 0;
+        newProduct.setId(lastId + 1);
+        allProducts.add(newProduct);
     }
 
     /**
