@@ -31,47 +31,107 @@ public class MainController extends Controller implements Initializable {
 
     @FXML
     public void openAddPart(ActionEvent e){
-        openWindow("addpart");
-        closeWindow(e);
+        try{
+            openWindow("addpart");
+            closeWindow(e);
+        } catch (Exception ex){
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setContentText("An error occurred. Please try again.");
+            a.show();
+        }
     }
 
     @FXML
     public void openAddProduct(ActionEvent e){
-        openWindow("addproduct");
-        closeWindow(e);
-    }
-
-    @FXML
-    public void openModifyPart(ActionEvent e){
-        Part selected = partTable.getSelectionModel().getSelectedItem();
-        if(selected != null)
-        {
-            openWindow("modifypart", selected);
+        try{
+            openWindow("addproduct");
             closeWindow(e);
-        }else {
+        } catch (Exception ex){
             Alert a = new Alert(Alert.AlertType.ERROR);
-            a.setContentText("A part was not selected. Please select one and try again.");
+            a.setContentText("An error occurred. Please try again.");
             a.show();
         }
 
     }
 
     @FXML
+    public void openModifyPart(ActionEvent e){
+        try{
+            Part selected = partTable.getSelectionModel().getSelectedItem();
+            if(selected != null)
+            {
+                openWindow("modifypart", selected);
+                closeWindow(e);
+            } else {
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setContentText("A part was not selected. Please select one and try again.");
+                a.show();
+            }
+        } catch (Exception ex){
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setContentText("An error occurred. Please try again.");
+            a.show();
+        }
+    }
+
+    @FXML
     public void openModifyProduct(ActionEvent e){
-        openWindow("modifyproduct");
-        closeWindow(e);
+        try{
+            Product selected = productTable.getSelectionModel().getSelectedItem();
+            if(selected != null){
+                openWindow("modifyproduct", selected);
+                closeWindow(e);
+            } else {
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setContentText("A product was not selected. Please select one and try again.");
+                a.show();
+            }
+        } catch(Exception ex){
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setContentText("An error occurred. Please try again.");
+            a.show();
+        }
+
+
     }
 
     @FXML
     public void deletePart(ActionEvent e){
-        Main.mainInventory.deletePart(partTable.getSelectionModel().getSelectedItem());
-        partTable.getItems().setAll(Main.mainInventory.getAllParts());
+        try{
+            var selected = partTable.getSelectionModel().getSelectedItem();
+            if(selected != null){
+                Main.mainInventory.deletePart(selected);
+                partTable.getItems().setAll(Main.mainInventory.getAllParts());
+            }else{
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setContentText("A part was not selected. Please select one and try again.");
+                a.show();
+            }
+        } catch (Exception ex){
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setContentText("An error occurred. Please try again.");
+            a.show();
+        }
     }
 
     @FXML
     public void deleteProduct(ActionEvent e){
-        Main.mainInventory.deleteProduct(productTable.getSelectionModel().getSelectedItem());
-        productTable.getItems().setAll(Main.mainInventory.getAllProducts());
+        try{
+            var selected = productTable.getSelectionModel().getSelectedItem();
+            if(selected != null){
+                Main.mainInventory.deleteProduct(selected);
+                productTable.getItems().setAll(Main.mainInventory.getAllProducts());
+            } else {
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setContentText("A product was not selected. Please select one and try again.");
+                a.show();
+            }
+        } catch (Exception ex){
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setContentText("An error occurred. Please try again.");
+            a.show();
+        }
+
     }
 
     @Override

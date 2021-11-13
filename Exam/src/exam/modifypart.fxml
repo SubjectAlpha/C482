@@ -9,43 +9,46 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:controller="exam.controllers.ModifyPartController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="447.0" prefWidth="498.0" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <Text layoutX="44.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Modify Part">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Text>
-      <RadioButton fx:id="inHouseBtn" onAction="#toggleInHouse" layoutX="126.0" layoutY="47.0" mnemonicParsing="false" selected="true" text="In-House">
-         <toggleGroup>
-            <ToggleGroup fx:id="partGroup" />
-         </toggleGroup></RadioButton>
-      <RadioButton fx:id="outsourcedBtn" onAction="#toggleInHouse" layoutX="236.0" layoutY="47.0" mnemonicParsing="false" text="Outsourced" toggleGroup="$partGroup" />
-      <Button onAction="#editPart" layoutX="236.0" layoutY="354.0" mnemonicParsing="false" text="Save" />
-      <Button onAction="#cancelClick" layoutX="304.0" layoutY="354.0" mnemonicParsing="false" text="Cancel" />
+<AnchorPane fx:controller="exam.controllers.ModifyPartController" maxHeight="-Infinity" maxWidth="-Infinity"
+            minHeight="-Infinity" minWidth="-Infinity" prefHeight="447.0" prefWidth="498.0"
+            xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1">
+   <Text layoutX="44.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Modify Part">
+      <font>
+         <Font name="System Bold" size="12.0"/>
+      </font>
+   </Text>
+   <RadioButton fx:id="inHouseBtn" onAction="#toggleInHouse" layoutX="126.0" layoutY="47.0" mnemonicParsing="false"
+                selected="true" text="In-House">
+      <toggleGroup>
+         <ToggleGroup fx:id="partGroup"/>
+      </toggleGroup>
+   </RadioButton>
+   <RadioButton fx:id="outsourcedBtn" onAction="#toggleInHouse" layoutX="236.0" layoutY="47.0" mnemonicParsing="false"
+                text="Outsourced" toggleGroup="$partGroup"/>
+   <Button onAction="#editPart" layoutX="236.0" layoutY="354.0" mnemonicParsing="false" text="Save"/>
+   <Button onAction="#cancelClick" layoutX="304.0" layoutY="354.0" mnemonicParsing="false" text="Cancel"/>
 
-      <Label layoutX="69.0" layoutY="124.0" text="ID" />
-      <TextField fx:id="idField" disable="true" layoutX="145.0" layoutY="120.0" promptText="Auto Generated" />
+   <Label layoutX="69.0" layoutY="124.0" text="ID"/>
+   <TextField fx:id="idField" disable="true" layoutX="145.0" layoutY="120.0" promptText="Auto Generated"/>
 
-      <Label layoutX="69.0" layoutY="163.0" text="Name" />
-      <TextField fx:id="partName" layoutX="145.0" layoutY="159.0" />
+   <Label layoutX="69.0" layoutY="163.0" text="Name"/>
+   <TextField fx:id="partName" layoutX="145.0" layoutY="159.0"/>
 
-      <Label layoutX="69.0" layoutY="195.0" text="Inv" />
-      <TextField fx:id="inventoryCount" layoutX="145.0" layoutY="191.0" />
+   <Label layoutX="69.0" layoutY="195.0" text="Inv"/>
+   <TextField fx:id="inventoryCount" layoutX="145.0" layoutY="191.0"/>
 
-      <Label layoutX="73.0" layoutY="262.0" text="Max" />
-      <TextField fx:id="maxCount" layoutX="145.0" layoutY="258.0" />
+   <Label layoutX="73.0" layoutY="262.0" text="Max"/>
+   <TextField fx:id="maxCount" layoutX="145.0" layoutY="258.0"/>
 
-      <Label layoutX="304.0" layoutY="262.0" text="Min" />
-      <TextField fx:id="minCount" layoutX="334.0" layoutY="258.0" />
+   <Label layoutX="304.0" layoutY="262.0" text="Min"/>
+   <TextField fx:id="minCount" layoutX="334.0" layoutY="258.0"/>
 
-      <Label layoutX="69.0" layoutY="228.0" text="Price/Cost" />
-      <TextField fx:id="price" layoutX="145.0" layoutY="224.0" />
+   <Label layoutX="69.0" layoutY="228.0" text="Price/Cost"/>
+   <TextField fx:id="price" layoutX="145.0" layoutY="224.0"/>
 
-      <Label fx:id="machineIdLabel" layoutX="50.0" layoutY="295.0" text="Machine ID" />
-      <TextField fx:id="machineId" layoutX="145.0" layoutY="291.0" />
+   <Label fx:id="machineIdLabel" layoutX="50.0" layoutY="295.0" text="Machine ID"/>
+   <TextField fx:id="machineId" layoutX="145.0" layoutY="291.0"/>
 
-      <Label fx:id="errorLabel" layoutX="100.0" layoutY="390.0"/>
+   <Label fx:id="errorLabel" layoutX="100.0" layoutY="390.0"/>
 
-   </children>
 </AnchorPane>

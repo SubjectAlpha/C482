@@ -12,13 +12,8 @@ import java.util.Objects;
  * @author Jacob Starr
  */
 public class Inventory {
-    private ObservableList<Part> allParts;
-    private ObservableList<Product> allProducts;
-
-    public Inventory(){
-        allParts = FXCollections.observableList(new ArrayList<>());
-        allProducts = FXCollections.observableList(new ArrayList<>());
-    }
+    private final ObservableList<Part> allParts = FXCollections.observableList(new ArrayList<>());
+    private final ObservableList<Product> allProducts = FXCollections.observableList(new ArrayList<>());
 
     /**
      *
