@@ -7,9 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
@@ -38,16 +36,36 @@ public class AddProductController extends Controller implements Initializable {
     public TextField productMax;
     public TextField productMin;
 
+    /**
+     * Remove associated part from list.
+     * @param e ActionEvent
+     */
     public void removeAssociatedPart(ActionEvent e) {
-        relatedPartsMain.remove(relatedParts.getSelectionModel().getSelectedItem());
-        relatedParts.getItems().setAll(relatedPartsMain);
+        var selected = relatedParts.getSelectionModel().getSelectedItem();
+        Alert confirmation = confirmDelete(selected);
+        confirmation.showAndWait();
+
+        if(confirmation.getResult() == ButtonType.YES){
+            relatedPartsMain.remove(selected);
+            relatedParts.getItems().setAll(relatedPartsMain);
+        } else {
+            confirmation.close();
+        }
     }
 
+    /**
+     * Add selected part to list of related parts.
+     * @param e ActionEvent
+     */
     public void addAssociatedPart(ActionEvent e){
         relatedPartsMain.add(unrelatedParts.getSelectionModel().getSelectedItem());
         relatedParts.getItems().setAll(relatedPartsMain);
     }
 
+    /**
+     * Parse data and create the new product.
+     * @param e ActionEvent
+     */
     public void addProduct(ActionEvent e) {
         try{
             double ppu = Double.parseDouble(productPrice.getText());
@@ -55,23 +73,33 @@ public class AddProductController extends Controller implements Initializable {
             int max = Integer.parseInt(productMax.getText());
             int min = Integer.parseInt(productMin.getText());
 
-            if(max > min){
+            if(max > min && max >= stock && stock >= min){
                 Product newProduct = new Product(0, productName.getText(), ppu, stock, max, min);
 
                 for (Part p: relatedPartsMain) {
                     newProduct.addAssociatedPart(p);
                 }
-
                 Main.mainInventory.addProduct(newProduct);
 
                 openWindow("main");
                 closeWindow(e);
+            } else {
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setContentText("Max must be more than min. Stock must be less than max, but more than min.");
+                a.show();
             }
         } catch (Exception ex){
-            ex.printStackTrace();
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setContentText("An error occurred. Please try again.");
+            a.show();
         }
     }
 
+    /**
+     * Setup the tables to track data.
+     * @param location URL
+     * @param resources Resource bundle
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 

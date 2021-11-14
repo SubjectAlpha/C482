@@ -7,10 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
@@ -40,42 +37,72 @@ public class ModifyProductController extends Controller implements Initializable
     public TextField productMin;
     public Label errorLabel;
 
+    /**
+     * Display confirm dialog and if confirmed it will remove the association between the selected part and product.
+     * @param e ActionEvent
+     */
     public void removeAssociatedPart(ActionEvent e) {
         Part selected =  relatedParts.getSelectionModel().getSelectedItem();
-        relatedPartsMain.remove(selected);
-        relatedParts.getItems().setAll(relatedPartsMain);
+        Alert confirmation = confirmDelete(selected);
+        confirmation.showAndWait();
+
+        if(confirmation.getResult() == ButtonType.YES){
+            relatedPartsMain.remove(selected);
+            relatedParts.getItems().setAll(relatedPartsMain);
+        } else {
+            confirmation.close();
+        }
+
     }
 
+    /**
+     * Add selected part to the list of related parts.
+     * @param e ActionEvent
+     */
     public void addAssociatedPart(ActionEvent e){
         relatedPartsMain.add(unrelatedParts.getSelectionModel().getSelectedItem());
         relatedParts.getItems().setAll(relatedPartsMain);
     }
 
+    /**
+     * Parse input and update selected product, or display error alert.
+     * @param e ActionEvent
+     */
     public void modifyProduct(ActionEvent e) {
         try{
             int max = Integer.parseInt(productMax.getText());
             int min = Integer.parseInt(productMin.getText());
+            int stock = Integer.parseInt(productStock.getText());
 
-            if(max > min){
+            if(max > min && max >= stock && stock >= min){
                 Product editProduct = (Product) this.dataObject;
                 editProduct.setMax(max);
                 editProduct.setName(productName.getText());
                 editProduct.setPrice(Double.parseDouble(productPrice.getText()));
                 editProduct.setMin(min);
-                editProduct.setStock(Integer.parseInt(productStock.getText()));
+                editProduct.setStock(stock);
 
                 Main.mainInventory.updateProduct(editProduct.getId() - 1, editProduct);
 
                 openWindow("main");
                 closeWindow(e);
             } else {
-                errorLabel.setText("Maximum cannot be less than minimum.");
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setContentText("Max must be more than min. Stock must be less than max, but more than min.");
+                a.show();
             }
         } catch (Exception ex){
-            errorLabel.setText("An error occurred. Please try again later.");
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setContentText("An error occurred. Please try again later.");
+            a.show();
         }
     }
 
+    /**
+     * Setup tables to track data.
+     * @param location URL
+     * @param resources ResourceBundle
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         unrelatedPartId.setCellValueFactory(new PropertyValueFactory<Part, String>("id"));
@@ -92,20 +119,30 @@ public class ModifyProductController extends Controller implements Initializable
         relatedParts.getItems().setAll(relatedPartsMain);
     }
 
+    /**
+     *
+     * @param o Object to be used on the page.
+     */
     @Override
     public void setDataObject(Object o){
+        try{
+            this.dataObject = o;
+            Product p = (Product) this.dataObject;
+            relatedParts.getItems().setAll(p.getAssociatedParts());
 
-        this.dataObject = o;
-        Product p = (Product) this.dataObject;
-        relatedParts.getItems().setAll(p.getAssociatedParts());
+            relatedPartsMain.addAll(p.getAssociatedParts());
 
-        relatedPartsMain.addAll(p.getAssociatedParts());
+            productId.setText(Integer.toString(p.getId()));
+            productName.setText(p.getName());
+            productStock.setText(Integer.toString(p.getStock()));
+            productPrice.setText(Double.toString(p.getPrice()));
+            productMax.setText(Integer.toString(p.getMax()));
+            productMin.setText(Integer.toString(p.getMin()));
+        } catch (Exception e){
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setContentText("An error occurred. Please try again later.");
+            a.show();
+        }
 
-        productId.setText(Integer.toString(p.getId()));
-        productName.setText(p.getName());
-        productStock.setText(Integer.toString(p.getStock()));
-        productPrice.setText(Double.toString(p.getPrice()));
-        productMax.setText(Integer.toString(p.getMax()));
-        productMin.setText(Integer.toString(p.getMin()));
     }
 }

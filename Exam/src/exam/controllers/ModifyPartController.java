@@ -7,6 +7,7 @@ import exam.objects.Part;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
@@ -18,7 +19,7 @@ import java.util.ResourceBundle;
 import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
 
-public class ModifyPartController extends Controller implements Initializable {
+public class ModifyPartController extends Controller {
 
     public TextField idField;
     public TextField inventoryCount;
@@ -34,9 +35,10 @@ public class ModifyPartController extends Controller implements Initializable {
 
     private boolean inHouse = false;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {}
-
+    /**
+     * Sets the object to be used, must check if its InHouse or Outsourced/
+     * @param o Object to be used on the page.
+     */
     @Override
     public void setDataObject(Object o){
         this.dataObject = o;
@@ -67,12 +69,18 @@ public class ModifyPartController extends Controller implements Initializable {
 
             machineIdLabel.setText("Company Name");
         } else {
-            throw new RuntimeException();
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setContentText("An error occurred. Please try again later.");
+            a.show();
         }
 
 
     }
 
+    /**
+     * Parse data and update part of requirements are met, if not display error dialog.
+     * @param e
+     */
     public void editPart(ActionEvent e) {
         try{
             int id = parseInt(idField.getText());
@@ -81,7 +89,7 @@ public class ModifyPartController extends Controller implements Initializable {
             int max = parseInt(maxCount.getText());
             int min = parseInt(minCount.getText());
 
-            if(max > min){
+            if(max > min && max >= stock && stock >= min){
                 if(inHouse){
                     InHouse updatePart = (InHouse) this.dataObject;
                     updatePart.setPrice(ppu);
@@ -103,14 +111,22 @@ public class ModifyPartController extends Controller implements Initializable {
                 openWindow("main");
                 closeWindow(e);
             }else{
-                errorLabel.setText("Maximum cannot be less than minimum.");
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setContentText("Max must be more than min. Stock must be less than max, but more than min.");
+                a.show();
             }
 
         }catch(Exception ex){
-            errorLabel.setText("An error occurred. Please try again later.");
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setContentText("An error occurred. Please try again later.");
+            a.show();
         }
     }
 
+    /**
+     * Switch label text between machine id and company name based on selected button.
+     * @param e ActionEvent to toggle on.
+     */
     @FXML
     public void toggleInHouse(ActionEvent e) {
         if(inHouseBtn.isSelected())

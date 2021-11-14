@@ -16,6 +16,12 @@ import java.util.Objects;
 
 public class Main extends Application {
     public static final Inventory mainInventory = new Inventory();
+
+    /**
+     * Create out first scene after we populate the mainInventory with some starter data.
+     * @param primaryStage the main stage
+     * @throws Exception
+     */
     @Override
     public void start(Stage primaryStage) throws Exception{
         var tire = new InHouse(0, "Tire", 9.99, 10, 0, 20);
@@ -41,6 +47,10 @@ public class Main extends Application {
         primaryStage.show();
     }
 
+    /**
+     * Main start method for application.
+     * @param args terminal args
+     */
     public static void main(String[] args) {
         launch(args);
     }

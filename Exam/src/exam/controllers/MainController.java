@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -29,6 +30,10 @@ public class MainController extends Controller implements Initializable {
     @FXML private TableColumn<Product, String> ProductAmount;
     @FXML private TableColumn<Product, String> ProductCost;
 
+    /**
+     * Open the add part window.
+     * @param e ActionEvent
+     */
     @FXML
     public void openAddPart(ActionEvent e){
         try{
@@ -41,6 +46,10 @@ public class MainController extends Controller implements Initializable {
         }
     }
 
+    /**
+     * Open the add product window.
+     * @param e ActionEvent
+     */
     @FXML
     public void openAddProduct(ActionEvent e){
         try{
@@ -54,6 +63,10 @@ public class MainController extends Controller implements Initializable {
 
     }
 
+    /**
+     * Open and populate the modify part window.
+     * @param e ActionEvent
+     */
     @FXML
     public void openModifyPart(ActionEvent e){
         try{
@@ -74,6 +87,10 @@ public class MainController extends Controller implements Initializable {
         }
     }
 
+    /**
+     * Open and populate the modify product window.
+     * @param e ActionEvent
+     */
     @FXML
     public void openModifyProduct(ActionEvent e){
         try{
@@ -95,13 +112,25 @@ public class MainController extends Controller implements Initializable {
 
     }
 
+    /**
+     * Prompt user for confirmation and then delete part if confirmed.
+     * @param e ActionEvent
+     */
     @FXML
     public void deletePart(ActionEvent e){
         try{
             var selected = partTable.getSelectionModel().getSelectedItem();
             if(selected != null){
-                Main.mainInventory.deletePart(selected);
-                partTable.getItems().setAll(Main.mainInventory.getAllParts());
+                Alert confirmation = confirmDelete(selected);
+                confirmation.showAndWait();
+
+                if(confirmation.getResult() == ButtonType.YES){
+                    Main.mainInventory.deletePart(selected);
+                    partTable.getItems().setAll(Main.mainInventory.getAllParts());
+                } else {
+                    confirmation.close();
+                }
+
             }else{
                 Alert a = new Alert(Alert.AlertType.ERROR);
                 a.setContentText("A part was not selected. Please select one and try again.");
@@ -114,14 +143,31 @@ public class MainController extends Controller implements Initializable {
         }
     }
 
+    /**
+     * Prompt user for confirmation and then delete product if confirmed.
+     * @param e ActionEvent
+     */
     @FXML
     public void deleteProduct(ActionEvent e){
         try{
             var selected = productTable.getSelectionModel().getSelectedItem();
-            if(selected != null){
-                Main.mainInventory.deleteProduct(selected);
-                productTable.getItems().setAll(Main.mainInventory.getAllProducts());
-            } else {
+            if(selected != null && selected.getAssociatedParts()
+                    .size() == 0){
+                Alert confirmation = confirmDelete(selected);
+                confirmation.showAndWait();
+
+                if(confirmation.getResult() == ButtonType.YES){
+                    Main.mainInventory.deleteProduct(selected);
+                    productTable.getItems().setAll(Main.mainInventory.getAllProducts());
+                } else {
+                   confirmation.close();
+                }
+            } else if(selected != null && selected.getAssociatedParts().size() != 0) {
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setContentText("This product has parts associated with it. To delete this product you must remove its parts.");
+                a.show();
+            }
+            else {
                 Alert a = new Alert(Alert.AlertType.ERROR);
                 a.setContentText("A product was not selected. Please select one and try again.");
                 a.show();
@@ -134,6 +180,11 @@ public class MainController extends Controller implements Initializable {
 
     }
 
+    /**
+     * Get the table ready to track data.
+     * @param location URL
+     * @param resources ResourceBundle
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources){
         PartId.setCellValueFactory(new PropertyValueFactory<Part, String>("id"));

@@ -2,7 +2,6 @@ package exam.objects;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableListBase;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -16,7 +15,7 @@ public class Inventory {
     private final ObservableList<Product> allProducts = FXCollections.observableList(new ArrayList<>());
 
     /**
-     *
+     * Adds a new part to the list.
      * @param newPart the newPart to set
      */
     public void addPart(Part newPart){
@@ -26,7 +25,7 @@ public class Inventory {
     }
 
     /**
-     *
+     * Returns a part matching the requested ID or null.
      * @param partId the partId to find
      * @return the Part with matching Id
      */
@@ -41,7 +40,7 @@ public class Inventory {
     }
 
     /**
-     *
+     * Return a list of parts with matching names.
      * @param partName the partName to look for
      * @return the Part(s) with matching names
      */
@@ -50,15 +49,15 @@ public class Inventory {
     }
 
     /**
-     *
-     * @return a list of all part
+     * Returns a list of all parts.
+     * @return a list of all parts.
      */
     public ObservableList<Part> getAllParts(){
         return allParts;
     }
 
     /**
-     *
+     * Remove the part at the selected index, then insert the updated part.
      * @param index the index of the list to update
      * @param selectedPart the data to update the part
      */
@@ -73,16 +72,21 @@ public class Inventory {
     }
 
     /**
-     *
+     * Remove selected part from the list of parts.
      * @param selectedPart the part to remove
      * @return boolean result of removal process.
      */
     public boolean deletePart(Part selectedPart){
-        return allParts.remove(selectedPart);
+        try{
+            return allParts.remove(selectedPart);
+        } catch (Exception e){
+            return false;
+        }
+
     }
 
     /**
-     *
+     * Generate an ID and insert the new product.
      * @param newProduct the product to add to the list
      */
     public void addProduct(Product newProduct){
@@ -92,16 +96,20 @@ public class Inventory {
     }
 
     /**
-     *
+     * Returns the product that matches the id supplied, or null.
      * @param productId the productId to search by
      * @return the Product with a matching id
      */
     public Product lookupProduct(int productId){
-        return allProducts.get(productId);
+        try{
+            return allProducts.get(productId);
+        } catch (Exception e){
+            return null;
+        }
     }
 
     /**
-     *
+     * Returns a list of products that match the searched string.
      * @param productName the name of the product to search
      * @return the Product(s) that match the name
      */
@@ -110,7 +118,7 @@ public class Inventory {
     }
 
     /**
-     *
+     * Remove product at the index, and insert the updated one at the same index.
      * @param index the index to search by
      * @param newProduct the product to replace
      */
@@ -125,7 +133,7 @@ public class Inventory {
     }
 
     /**
-     *
+     * Remove a product from the list.
      * @param selectedProduct the Product to remove
      * @return boolean result of removal from list
      */
@@ -134,7 +142,7 @@ public class Inventory {
     }
 
     /**
-     *
+     * Get a list of all products.
      * @return a list of all products
      */
     public ObservableList<Product> getAllProducts(){
